@@ -13,18 +13,6 @@ from selenium.webdriver.common.by import By
 # Нюанс номер 2:
 # Вам потрібно самостійно придумати перевірку, що буде підверджувати успішність реєстрації.
 # Це може бути перевірка наявності якогось поля, його значення, повідомлення або первірка URL.
-# class Generate_random:
-#     def rand_pass(self, length):
-#         generate_pass = ''.join([random.choice(string.ascii_lowercase + string.digits) for i in range(length)])
-#         return generate_pass
-#
-#     def random_email(self, dog):
-#         generate_email = ''.join([random.choice(string.ascii_lowercase) for e in range(dog)]) + '@john.com'
-#         return generate_email
-#
-#     def rand_username(self, name):
-#         generate_name = ''.join([random.choice(string.ascii_lowercase) for n in range(name)])
-#         return generate_name
 
 
 class TestRegistration:
@@ -63,6 +51,7 @@ class TestRegistration:
         button = driver.find_element(by=By.XPATH, value='.//*[text()="Sign up for OurApp"]')
         button.click()
         sleep(1)
+        sleep(12)
 
         error_element = driver.find_element(by=By.XPATH, value='.//strong')
         assert error_element.is_displayed()
