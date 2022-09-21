@@ -1,15 +1,25 @@
 import logging
 from time import sleep
 
+import pytest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
+
+from constants.base import DRIVER_PATH, BASE_URL
+from pages.start_page import StartPage
 
 log = logging.getLogger(__name__)
 
 
 class TestStartPage:
 
-    def test_empty_email_alert(self):
+    @pytest.fixture(scope='function')
+    def start_page(self):
+        driver = webdriver.Chrome(DRIVER_PATH)
+        driver.get(BASE_URL)
+        yield StartPage(driver)
+        driver.close()
+
+    def test_empty_email_alert(self, start_page, xpath, value, email):
         """
         Setup:
             Open the qa-complex site
@@ -18,21 +28,13 @@ class TestStartPage:
             Clear the email field
             Check the email-field alert message
         """
-        driver = webdriver.Chrome(r"C:\Users\andrii.lazaryshyn\PycharmProjects\AQA_Selenium\chromedriver.exe")
-        driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
+        start_page.fill_and_clear(xpath=xpath, value=value)
+        log.info('Started with empty email')
 
-        log.info('Starting test - check email field alert')
-        email = driver.find_element(by=By.XPATH, value='.//*[@name="email" and @placeholder="you@example.com"]')
-        email.send_keys('villy@wonka.com')
-        sleep(2)
-        email.clear()
-        sleep(5)
-        alert_message = driver.find_element(by=By.XPATH, value='.//*[text()="You must provide a valid email address."]')
-        assert alert_message.is_displayed()
-        log.info('Test passed. Alert is displayed')
-        driver.close()
+        start_page.verify_empty_email_field_alert(email=email)
+        log.info('Empty email field error verified')
 
-    def test_empty_password_alert(self):
+    def test_empty_password_alert(self, start_page, xpath, value, password):
         """
         Setup:
             Open the qa-complex site
@@ -41,23 +43,12 @@ class TestStartPage:
             Clear the password field
             Check the password-field alert message
         """
-        driver = webdriver.Chrome(r"C:\Users\andrii.lazaryshyn\PycharmProjects\AQA_Selenium\chromedriver.exe")
-        driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
+        start_page.fill_and_clear(xpath=xpath, value=value)
+        log.debug('Getting the error message for the empty password field')
 
-        log.debug('Starting test - check the password field alert')
-        password = driver.find_element(by=By.XPATH, value='.//*[@name="password" and @placeholder="Create a password"]')
-        password.send_keys('Icht|@ndr')
-        sleep(2)
-        password.clear()
-        sleep(5)
-        alert_message = driver.find_element(by=By.XPATH,
-                                            value='.//*[text()="Password must be at least 12 characters."]')
-        assert alert_message.is_displayed()
-        log.debug('Test passed. Alert is displayed')
+        start_page.verify_empty_password_field_alert(password=password)
 
-        driver.close()
-
-    def test_incorrect_login(self):
+    def test_incorrect_login(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -66,32 +57,14 @@ class TestStartPage:
             Click on the 'Sign in' button
             Check the invalid username\password alert message
         """
-        # Create driver
-        driver = webdriver.Chrome(r"C:\Users\andrii.lazaryshyn\PycharmProjects\AQA_Selenium\chromedriver.exe")
+        start_page.sign_in('User1', 'Pastor12')
+        log.info('Logged in as unknown user')
+        sleep(1)
 
-        # Open page
-        driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
+        start_page.verify_sign_in_error()
+        log.info('Error was verified')
 
-        log.warning('Invalid logging test scenario started')
-        username = driver.find_element(by=By.XPATH, value=".//input[@placeholder='Username']")
-        username.send_keys('User1')
-
-        passwd = driver.find_element(by=By.XPATH, value=".//input[@placeholder='Password']")
-        passwd.send_keys('Kavabanga')
-
-        button = driver.find_element(by=By.XPATH, value=".//button[text()='Sign In']")
-        button.click()
-
-        sleep(10)
-
-        error_element = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger text-center']")
-        assert error_element.text == "Invalid username / pasword", f"Actual message: {error_element.text}"
-        log.warning('Test passed. Only authorized users can log in')
-
-        # Close driver
-        driver.close()
-
-    def test_empty_login(self):
+    def test_empty_login(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -100,26 +73,14 @@ class TestStartPage:
             Click on the 'Sign in' button
             Check the invalid username\password alert message
         """
-        driver1 = webdriver.Chrome(r"C:\Users\andrii.lazaryshyn\PycharmProjects\AQA_Selenium\chromedriver.exe")
-        driver1.get("https://qa-complex-app-for-testing.herokuapp.com/")
+        start_page.sign_in('', '')
+        log.debug('Provided empty values')
+        sleep(1)
 
-        username = driver1.find_element(by=By.XPATH, value=".//input[@placeholder='Username']")
-        username.clear()
+        start_page.verify_sign_in_error()
+        log.debug('Error empty fields was verified')
 
-        password = driver1.find_element(by=By.XPATH, value=".//input[@placeholder='Password']")
-        password.clear()
-
-        button = driver1.find_element(by=By.XPATH, value=".//button[text()='Sign In']")
-        button.click()
-
-        sleep(5)
-
-        error_element = driver1.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger text-center']")
-        assert error_element.text == "Invalid username / pasword", f"Actual message: {error_element.text}"
-
-        driver1.close()
-
-    def test_success_login(self):
+    def test_success_login(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -129,24 +90,9 @@ class TestStartPage:
             Click on the 'Log in' button
             Check if there is a 'Chat' button
         """
-        driver = webdriver.Chrome(r"C:\Users\andrii.lazaryshyn\PycharmProjects\AQA_Selenium\chromedriver.exe")
-        driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
 
-        log.info('Successful log in test started')
-        username = driver.find_element(by=By.XPATH, value=".//input[@placeholder='Username']")
-        username.send_keys('abdul')
-        sleep(1)
+        start_page.sign_in('abdul', 'Ci6aZ9khFDWu38L')
+        log.info('Logged in as existing user')
 
-        password = driver.find_element(by=By.XPATH, value=".//input[@placeholder='Password']")
-        password.send_keys('Ci6aZ9khFDWu38L')
-        sleep(1)
-
-        button = driver.find_element(by=By.XPATH, value=".//button[text()='Sign In']")
-        button.click()
-        sleep(3)
-
-        chat_button = driver.find_element(by=By.XPATH, value='.//*[@title="" and @data-original-title="Chat"]')
-        assert chat_button.is_displayed()
-        log.info('Test passed. Authorized users can log in the app.')
-
-        driver.close()
+        start_page.verify_chat_button_exists()
+        log.info('Chat button exists - User is logged in')
