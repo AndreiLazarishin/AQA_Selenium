@@ -19,7 +19,7 @@ class TestStartPage:
         yield StartPage(driver)
         driver.close()
 
-    def test_empty_email_alert(self, start_page, xpath, value, email):
+    def test_empty_email_alert(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -28,13 +28,11 @@ class TestStartPage:
             Clear the email field
             Check the email-field alert message
         """
-        start_page.fill_and_clear(xpath=xpath, value=value)
         log.info('Started with empty email')
-
-        start_page.verify_empty_email_field_alert(email=email)
+        start_page.verify_empty_email_field_alert()
         log.info('Empty email field error verified')
 
-    def test_empty_password_alert(self, start_page, xpath, value, password):
+    def test_empty_password_alert(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -43,10 +41,9 @@ class TestStartPage:
             Clear the password field
             Check the password-field alert message
         """
-        start_page.fill_and_clear(xpath=xpath, value=value)
-        log.debug('Getting the error message for the empty password field')
-
-        start_page.verify_empty_password_field_alert(password=password)
+        log.info('Getting the error message for the empty password field')
+        start_page.verify_empty_password_field_alert()
+        log.info('Empty password error verified')
 
     def test_incorrect_login(self, start_page):
         """
@@ -74,11 +71,11 @@ class TestStartPage:
             Check the invalid username\password alert message
         """
         start_page.sign_in('', '')
-        log.debug('Provided empty values')
+        log.info('Provided empty values')
         sleep(1)
 
         start_page.verify_sign_in_error()
-        log.debug('Error empty fields was verified')
+        log.info('Error empty fields was verified')
 
     def test_success_login(self, start_page):
         """

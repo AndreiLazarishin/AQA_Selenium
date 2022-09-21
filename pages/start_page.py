@@ -43,16 +43,14 @@ class StartPage(BasePage):
         """Verify that chat button exists"""
         assert self.constants.CHAT_BUTTON_EXISTS
 
-    def verify_empty_email_field_alert(self, email):
+    def verify_empty_email_field_alert(self):
         """Verify Empty email error"""
-        self.fill_and_clear(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value=email)
-        assert self.get_element_text(
-            self.constants.SIGN_UP_EMAIL_ERROR_XPATH) == self.constants.SIGN_UP_EMAIL_ERROR_TEXT
-        f"Actual message: '{self.get_element_text(self.constants.SIGN_UP_EMAIL_ERROR_XPATH)}'"
+        self.fill_and_clear(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value='email')
+        sleep(3)
+        assert self.constants.SIGN_UP_EMAIL_ERROR_TEXT
 
-    def verify_empty_password_field_alert(self, password):
+    def verify_empty_password_field_alert(self):
         """Verify Empty email error"""
-        self.fill_and_clear(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=password)
-        assert self.get_element_text(
-            self.constants.SIGN_UP_PASSWORD_ERROR_XPATH) == self.constants.SIGN_UP_PASSWORD_ERROR_TEXT
-        f"Actual message: '{self.get_element_text(self.constants.SIGN_UP_PASSWORD_ERROR_XPATH)}'"
+        self.fill_and_clear(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value='password')
+        sleep(3)
+        assert self.constants.SIGN_UP_PASSWORD_ERROR_TEXT
