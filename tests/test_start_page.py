@@ -6,6 +6,7 @@ from selenium import webdriver
 
 from constants.base import DRIVER_PATH, BASE_URL
 from pages.start_page import StartPage
+from pages.utils import rand_username, rand_email, rand_password
 
 log = logging.getLogger(__name__)
 
@@ -93,3 +94,20 @@ class TestStartPage:
 
         start_page.verify_chat_button_exists()
         log.info('Chat button exists - User is logged in')
+
+    def test_success_sign_up(self, start_page):
+        """Setup:
+            open the qa-complex site
+        Steps:
+            Fill in the username
+            Fill in the email
+            Fill in the password
+            Click on the Sign-up button"""
+        user = rand_username()
+        email = rand_email()
+        password = rand_password()
+        start_page.sign_up(user, email, password)
+        log.info('Filling the fields and sign-up')
+
+        start_page.verify_success_sign_up(user)
+        log.info('Sign-up was success')

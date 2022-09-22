@@ -1,11 +1,13 @@
 import selenium
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class BasePage:
 
     def __init__(self, driver):
         self.driver = driver
+        self.waiter = WebDriverWait(driver=driver, timeout=5)
 
     def is_exists(self, xpath, by=By.XPATH):
         """Check that element exists"""
