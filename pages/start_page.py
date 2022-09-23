@@ -26,6 +26,7 @@ class StartPage(BasePage):
         self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value=username)
         self.fill_field(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value=email)
         self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=password)
+
         sleep(1)
         self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
 
@@ -40,7 +41,7 @@ class StartPage(BasePage):
 
     def verify_chat_button_exists(self):
         """Verify that chat button exists"""
-        assert self.constants.CHAT_BUTTON_EXISTS
+        assert self.constants.CHAT_BUTTON_EXISTS_XPATH
 
     def verify_empty_email_field_alert(self):
         """Verify Empty email error"""

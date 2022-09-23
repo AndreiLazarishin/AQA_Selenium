@@ -1,5 +1,4 @@
 import logging
-from time import sleep
 
 import pytest
 from selenium import webdriver
@@ -58,7 +57,6 @@ class TestStartPage:
         """
         start_page.sign_in('User1', 'Pastor12')
         log.info('Logged in as unknown user')
-        sleep(1)
 
         start_page.verify_sign_in_error()
         log.info('Error was verified')
@@ -74,7 +72,6 @@ class TestStartPage:
         """
         start_page.sign_in('', '')
         log.info('Provided empty values')
-        sleep(1)
 
         start_page.verify_sign_in_error()
         log.info('Error empty fields was verified')
