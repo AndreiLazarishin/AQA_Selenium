@@ -28,7 +28,6 @@ class StartPage(BasePage):
         self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=password)
         sleep(1)
         self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
-        sleep(1)
 
     def verify_success_sign_up(self, username):
         """Verify success Sign up hello message"""
@@ -46,11 +45,9 @@ class StartPage(BasePage):
     def verify_empty_email_field_alert(self):
         """Verify Empty email error"""
         self.fill_and_clear(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value='email')
-        sleep(3)
         assert self.constants.SIGN_UP_EMAIL_ERROR_TEXT
 
     def verify_empty_password_field_alert(self):
         """Verify Empty email error"""
         self.fill_and_clear(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value='password')
-        sleep(3)
         assert self.constants.SIGN_UP_PASSWORD_ERROR_TEXT

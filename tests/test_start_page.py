@@ -17,6 +17,7 @@ class TestStartPage:
     def start_page(self):
         driver = webdriver.Chrome(DRIVER_PATH)
         driver.get(BASE_URL)
+        driver.implicitly_wait(1.5)
         yield StartPage(driver)
         driver.close()
 
