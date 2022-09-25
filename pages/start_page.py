@@ -1,7 +1,6 @@
-from time import sleep
-
 from constants.start_page import StartPageConstants
 from pages.base_page import BasePage
+from pages.utils import wait_until_ok
 
 
 class StartPage(BasePage):
@@ -22,26 +21,30 @@ class StartPage(BasePage):
                self.constants.SIGN_IN_LOGIN_ERROR_TEXT, \
             f"Actual message: '{self.get_element_text(self.constants.SIGN_IN_LOGIN_ERROR_XPATH)}'"
 
-    def sign_up(self, username, email, password):
+    # def sign_up(self, username, email, password):
+    #     """Sign up as user"""
+    #     self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value=username)
+    #     self.fill_field(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value=email)
+    #     self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=password)
+    #
+    #     sleep(1)
+    #     self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
+
+    def sign_up_and_verify(self, username, email, password):
+        """Sign up as user and verify that you are inside"""
         self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value=username)
         self.fill_field(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value=email)
         self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=password)
+        # Click on the 'sign-up'
+        self.click_sign_up_and_verify()
+        from pages.hello_page import HelloPage
+        return HelloPage(self.driver)
 
-        sleep(1)
+    @wait_until_ok(period=0.25)
+    def click_sign_up_and_verify(self):
+        """Click sign up button and verify"""
         self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
-
-    def verify_success_sign_up(self, username):
-        """Verify success Sign up hello message"""
-        username = username.lower()
-        assert self.get_element_text(self.constants.HELLO_MESSAGE_XPATH) == \
-               self.constants.HELLO_MESSAGE_TEXT.format(username=username), \
-            f"Actual message: '{self.get_element_text(self.constants.HELLO_MESSAGE_XPATH)}'"
-        assert self.get_element_text(self.constants.HELLO_MESSAGE_USERNAME_XPATH) == username, \
-            f"Actual message: '{self.get_element_text(self.constants.HELLO_MESSAGE_USERNAME_XPATH)}'"
-
-    def verify_chat_button_exists(self):
-        """Verify that chat button exists"""
-        assert self.constants.CHAT_BUTTON_EXISTS_XPATH
+        assert not self.is_exists(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
 
     def verify_empty_email_field_alert(self):
         """Verify Empty email error"""
@@ -52,3 +55,8 @@ class StartPage(BasePage):
         """Verify Empty email error"""
         self.fill_and_clear(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value='password')
         assert self.constants.SIGN_UP_PASSWORD_ERROR_TEXT
+
+    def verify_empty_username_field_alert(self):
+        """Verify Empty username error"""
+        self.fill_and_clear(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value='1')
+        assert self.constants.SIGN_UP_USERNAME_ERROR_TEXT

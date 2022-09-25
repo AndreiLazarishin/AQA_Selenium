@@ -20,7 +20,7 @@ class TestStartPage:
         yield StartPage(driver)
         driver.close()
 
-    def test_empty_email_alert(self, start_page):
+    def test_empty_email_field_alert(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -33,7 +33,7 @@ class TestStartPage:
         start_page.verify_empty_email_field_alert()
         log.info('Empty email field error verified')
 
-    def test_empty_password_alert(self, start_page):
+    def test_empty_password_field_alert(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -45,6 +45,19 @@ class TestStartPage:
         log.info('Getting the error message for the empty password field')
         start_page.verify_empty_password_field_alert()
         log.info('Empty password error verified')
+
+    def test_empty_username_field_alert(self, start_page):
+        """
+        Setup:
+            Open the qa-complex site
+        Steps:
+            Fill in the username field
+            Clear the username field
+            Check the username-field alert message
+        """
+        log.info('Check the error for invalid username')
+        start_page.verify_empty_username_field_alert()
+        log.info('Username field alert were checked')
 
     def test_incorrect_login(self, start_page):
         """
@@ -104,8 +117,8 @@ class TestStartPage:
         user = rand_username()
         email = rand_email()
         password = rand_password()
-        start_page.sign_up(user, email, password)
+        hello_page = start_page.sign_up_and_verify(user, email, password)
         log.info('Filling the fields and sign-up')
 
-        start_page.verify_success_sign_up(user)
+        hello_page.verify_success_sign_up(user)
         log.info('Sign-up was success')
