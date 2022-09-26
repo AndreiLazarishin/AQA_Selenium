@@ -1,11 +1,11 @@
 import logging
-from time import sleep
 
 import pytest
 from selenium import webdriver
 
 from constants.base import DRIVER_PATH, BASE_URL
 from pages.start_page import StartPage
+from pages.utils import rand_username, rand_email, rand_password
 
 log = logging.getLogger(__name__)
 
@@ -16,10 +16,11 @@ class TestStartPage:
     def start_page(self):
         driver = webdriver.Chrome(DRIVER_PATH)
         driver.get(BASE_URL)
+        driver.implicitly_wait(1.5)
         yield StartPage(driver)
         driver.close()
 
-    def test_empty_email_alert(self, start_page):
+    def test_empty_email_field_alert(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -32,7 +33,7 @@ class TestStartPage:
         start_page.verify_empty_email_field_alert()
         log.info('Empty email field error verified')
 
-    def test_empty_password_alert(self, start_page):
+    def test_empty_password_field_alert(self, start_page):
         """
         Setup:
             Open the qa-complex site
@@ -45,6 +46,19 @@ class TestStartPage:
         start_page.verify_empty_password_field_alert()
         log.info('Empty password error verified')
 
+    def test_empty_username_field_alert(self, start_page):
+        """
+        Setup:
+            Open the qa-complex site
+        Steps:
+            Fill in the username field
+            Clear the username field
+            Check the username-field alert message
+        """
+        log.info('Check the error for invalid username')
+        start_page.verify_empty_username_field_alert()
+        log.info('Username field alert were checked')
+
     def test_incorrect_login(self, start_page):
         """
         Setup:
@@ -56,7 +70,6 @@ class TestStartPage:
         """
         start_page.sign_in('User1', 'Pastor12')
         log.info('Logged in as unknown user')
-        sleep(1)
 
         start_page.verify_sign_in_error()
         log.info('Error was verified')
@@ -72,7 +85,6 @@ class TestStartPage:
         """
         start_page.sign_in('', '')
         log.info('Provided empty values')
-        sleep(1)
 
         start_page.verify_sign_in_error()
         log.info('Error empty fields was verified')
@@ -93,3 +105,20 @@ class TestStartPage:
 
         start_page.verify_chat_button_exists()
         log.info('Chat button exists - User is logged in')
+
+    def test_success_sign_up(self, start_page):
+        """Setup:
+            open the qa-complex site
+        Steps:
+            Fill in the username
+            Fill in the email
+            Fill in the password
+            Click on the Sign-up button"""
+        user = rand_username()
+        email = rand_email()
+        password = rand_password()
+        hello_page = start_page.sign_up_and_verify(user, email, password)
+        log.info('Filling the fields and sign-up')
+
+        hello_page.verify_success_sign_up(user)
+        log.info('Sign-up was success')

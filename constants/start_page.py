@@ -11,15 +11,12 @@ class StartPageConstants:
     SIGN_UP_EMAIL_FIELD_XPATH = './/*[@name="email" and @placeholder="you@example.com"]'
     SIGN_UP_PASSWORD_FIELD_XPATH = './/input[@name="password" and @class="form-control"]'
     SIGN_UP_BUTTON_XPATH = './/*[text()="Sign up for OurApp"]'
-    SIGN_UP_EMAIL_ERROR_TEXT = './/*[text()="You must provide a valid email address."]'
+    SIGN_UP_EMAIL_ERROR_TEXT = 'You must provide a valid email address.'
     SIGN_UP_EMAIL_ERROR_XPATH = './/div[@class="alert alert-danger small liveValidateMessage ' \
                                 'liveValidateMessage--visible"] '
-    SIGN_UP_PASSWORD_ERROR_TEXT = './/*[text()="Password must be at least 12 characters."]'
+    SIGN_UP_PASSWORD_ERROR_TEXT = 'Password must be at least 12 characters.'
     SIGN_UP_PASSWORD_ERROR_XPATH = './/div[@class="alert alert-danger small liveValidateMessage ' \
                                    'liveValidateMessage--visible"] '
-
-    # Landing page
-    HELLO_MESSAGE_XPATH = './/h2'
-    HELLO_MESSAGE_USERNAME_XPATH = './/strong'
-    HELLO_MESSAGE_TEXT = 'Hello {username}, your feed is empty.'
-    CHAT_BUTTON_EXISTS = './/*[@title="" and @data-original-title="Chat"]'
+    SIGN_UP_USERNAME_ERROR_TEXT = 'Username must be at least 3 characters.'
+    SIGN_UP_USERNAME_ERROR_XPATH = './/div[@class="alert alert-danger small liveValidateMessage ' \
+                                   'liveValidateMessage--visible"] '
