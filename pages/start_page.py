@@ -21,15 +21,6 @@ class StartPage(BasePage):
                self.constants.SIGN_IN_LOGIN_ERROR_TEXT, \
             f"Actual message: '{self.get_element_text(self.constants.SIGN_IN_LOGIN_ERROR_XPATH)}'"
 
-    # def sign_up(self, username, email, password):
-    #     """Sign up as user"""
-    #     self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value=username)
-    #     self.fill_field(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value=email)
-    #     self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=password)
-    #
-    #     sleep(1)
-    #     self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
-
     def sign_up_and_verify(self, username, email, password):
         """Sign up as user and verify that you are inside"""
         self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value=username)

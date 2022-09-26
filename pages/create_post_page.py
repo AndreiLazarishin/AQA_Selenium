@@ -19,3 +19,8 @@ class CreatePostPage(BasePage):
         assert self.get_element_text(xpath=self.constants.SUCCESS_MESSAGE_XPATH) == self.constants.SUCCESS_MESSAGE_TEXT, \
  \
             f"Actual: {self.get_element_text(xpath=self.constants.SUCCESS_MESSAGE_XPATH)}"
+
+    def navigate_to_new_post_page(self):
+        self.verify_successfully_created_message()
+        from pages.post_page import PostPage
+        return PostPage(self.driver)
