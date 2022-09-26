@@ -22,10 +22,11 @@ class BasePage:
 
     def is_exists(self, xpath, by=By.XPATH):
         """Check that element exists"""
+        from selenium.common import NoSuchElementException
         try:
             self.driver.find_element(by=by, value=xpath)
             return True
-        except selenium.common.exception.NoSuchElementException:
+        except NoSuchElementException:
             return False
 
     def fill_field(self, xpath, value):
