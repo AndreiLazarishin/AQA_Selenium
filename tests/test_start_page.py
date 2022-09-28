@@ -1,24 +1,11 @@
 import logging
 
-import pytest
-from selenium import webdriver
-
-from constants.base import DRIVER_PATH, BASE_URL
-from pages.start_page import StartPage
-from pages.utils import rand_username, rand_email, rand_password
+from pages.utils import User
 
 log = logging.getLogger(__name__)
 
 
 class TestStartPage:
-
-    @pytest.fixture(scope='function')
-    def start_page(self):
-        driver = webdriver.Chrome(DRIVER_PATH)
-        driver.get(BASE_URL)
-        driver.implicitly_wait(1.5)
-        yield StartPage(driver)
-        driver.close()
 
     def test_empty_email_field_alert(self, start_page):
         """
@@ -59,7 +46,7 @@ class TestStartPage:
         start_page.verify_empty_username_field_alert()
         log.info('Username field alert were checked')
 
-    def test_incorrect_login(self, start_page):
+    def test_incorrect_login(self, start_page, random_user):
         """
         Setup:
             Open the qa-complex site
@@ -68,7 +55,7 @@ class TestStartPage:
             Click on the 'Sign in' button
             Check the invalid username\password alert message
         """
-        start_page.sign_in('User1', 'Pastor12')
+        start_page.sign_in(random_user)
         log.info('Logged in as unknown user')
 
         start_page.verify_sign_in_error()
@@ -83,13 +70,13 @@ class TestStartPage:
             Click on the 'Sign in' button
             Check the invalid username\password alert message
         """
-        start_page.sign_in('', '')
+        start_page.sign_in(User())
         log.info('Provided empty values')
 
         start_page.verify_sign_in_error()
         log.info('Error empty fields was verified')
 
-    def test_success_login(self, start_page):
+    def test_success_login(self, start_page, known_user):
         """
         Setup:
             Open the qa-complex site
@@ -100,13 +87,14 @@ class TestStartPage:
             Check if there is a 'Chat' button
         """
 
-        start_page.sign_in('abdul', 'Ci6aZ9khFDWu38L')
+        start_page.sign_in(known_user)
         log.info('Logged in as existing user')
 
+        # ToDo fix the test
         start_page.verify_chat_button_exists()
         log.info('Chat button exists - User is logged in')
 
-    def test_success_sign_up(self, start_page):
+    def test_success_sign_up(self, start_page, random_user):
         """Setup:
             open the qa-complex site
         Steps:
@@ -114,11 +102,9 @@ class TestStartPage:
             Fill in the email
             Fill in the password
             Click on the Sign-up button"""
-        user = rand_username()
-        email = rand_email()
-        password = rand_password()
-        hello_page = start_page.sign_up_and_verify(user, email, password)
+
+        hello_page = start_page.sign_up_and_verify(random_user)
         log.info('Filling the fields and sign-up')
 
-        hello_page.verify_success_sign_up(user)
+        hello_page.verify_success_sign_up(random_user.username)
         log.info('Sign-up was success')

@@ -5,7 +5,7 @@ from selenium import webdriver
 
 from constants.base import DRIVER_PATH, BASE_URL
 from pages.start_page import StartPage
-from pages.utils import rand_username, rand_email, rand_password, rand_str
+from pages.utils import rand_str
 
 
 class TestPostPage:
@@ -20,12 +20,9 @@ class TestPostPage:
         driver.close()
 
     @pytest.fixture()
-    def hello_page(self, start_page):
+    def hello_page(self, start_page, random_user):
         """Sign up as a user and return the page"""
-        user = rand_username()
-        email = rand_email()
-        password = rand_password()
-        return start_page.sign_up_and_verify(user, email, password)
+        return start_page.sign_up_and_verify(random_user)
 
     @pytest.fixture()
     def create_post_page(self, hello_page):
@@ -51,3 +48,16 @@ class TestPostPage:
 
         post_page.verify_deleted_post()
         self.log.info('The message was deleted')
+
+    def test_edit_post(self, create_post_page):
+        """
+                Set up:
+                    Navigate to the created post page
+                Steps:
+                    Edit the message
+                    Save the changes
+        """
+        post_page = create_post_page.navigate_to_new_post_page()
+        post_page.edit_post()
+
+        post_page.verify_successfully_edited_post()

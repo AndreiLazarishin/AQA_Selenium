@@ -20,6 +20,12 @@ class CreatePostPage(BasePage):
  \
             f"Actual: {self.get_element_text(xpath=self.constants.SUCCESS_MESSAGE_XPATH)}"
 
+    def update_post(self, title, body):
+        """Update the post"""
+        self.fill_field(xpath=self.constants.TITLE_FIELD_XPATH, value=title)
+        self.fill_field(xpath=self.constants.BODY_FIELD_XPATH, value=body)
+        self.click(xpath=self.constants.UPDATE_POST_BUTTON_XPATH)
+
     def navigate_to_new_post_page(self):
         self.verify_successfully_created_message()
         from pages.post_page import PostPage

@@ -9,10 +9,10 @@ class StartPage(BasePage):
         super().__init__(driver)
         self.constants = StartPageConstants
 
-    def sign_in(self, username, password):
+    def sign_in(self, user):
         """Sign in as user"""
-        self.fill_field(xpath=self.constants.SIGN_IN_USERNAME_FIELD_XPATH, value=username)
-        self.fill_field(xpath=self.constants.SIGN_IN_PASSWORD_FIELD_XPATH, value=password)
+        self.fill_field(xpath=self.constants.SIGN_IN_USERNAME_FIELD_XPATH, value=user.username)
+        self.fill_field(xpath=self.constants.SIGN_IN_PASSWORD_FIELD_XPATH, value=user.password)
         self.click(xpath=self.constants.SIGN_IN_BUTTON_XPATH)
 
     def verify_sign_in_error(self):
@@ -21,11 +21,11 @@ class StartPage(BasePage):
                self.constants.SIGN_IN_LOGIN_ERROR_TEXT, \
             f"Actual message: '{self.get_element_text(self.constants.SIGN_IN_LOGIN_ERROR_XPATH)}'"
 
-    def sign_up_and_verify(self, username, email, password):
+    def sign_up_and_verify(self, user):
         """Sign up as user and verify that you are inside"""
-        self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value=username)
-        self.fill_field(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value=email)
-        self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=password)
+        self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value=user.username)
+        self.fill_field(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value=user.email)
+        self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=user.password)
         # Click on the 'sign-up'
         self.click_sign_up_and_verify()
         from pages.hello_page import HelloPage

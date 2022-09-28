@@ -1,31 +1,19 @@
 import logging
 
 import pytest
-from selenium import webdriver
 
-from constants.base import DRIVER_PATH, BASE_URL
-from pages.start_page import StartPage
-from pages.utils import rand_username, rand_email, rand_password, rand_str
+from pages.utils import rand_str, User
 
 
 class TestCreatePostPage:
     log = logging.getLogger("[CreatePostPage]")
 
-    @pytest.fixture(scope='function')
-    def start_page(self):
-        driver = webdriver.Chrome(DRIVER_PATH)
-        driver.get(BASE_URL)
-        driver.implicitly_wait(1.5)
-        yield StartPage(driver)
-        driver.close()
-
     @pytest.fixture()
-    def hello_page(self, start_page):
+    def hello_page(self, start_page, random_user):
         """Sign up as a user and return the page"""
-        user = rand_username()
-        email = rand_email()
-        password = rand_password()
-        return start_page.sign_up_and_verify(user, email, password)
+        user = User()
+        user.fill_data()
+        return start_page.sign_up_and_verify(random_user)
 
     def test_create_post_page(self, hello_page):
         """

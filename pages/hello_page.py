@@ -21,4 +21,5 @@ class HelloPage(BasePage):
 
     def verify_chat_button_exists(self):
         """Verify that chat button exists"""
+        yield HelloPage(self.driver)
         assert self.constants.CHAT_BUTTON_XPATH
