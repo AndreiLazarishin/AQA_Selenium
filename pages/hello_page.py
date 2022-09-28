@@ -1,6 +1,7 @@
 from constants.hello_page import HelloPageConsts
 from pages.base_page import BasePage
 from pages.header import Header
+from pages.utils import log_decorator
 
 
 class HelloPage(BasePage):
@@ -10,6 +11,7 @@ class HelloPage(BasePage):
         self.constants = HelloPageConsts()
         self.header = Header(self.driver)
 
+    @log_decorator
     def verify_success_sign_up(self, username):
         """Verify success Sign up hello message"""
         username = username.lower()
@@ -21,5 +23,5 @@ class HelloPage(BasePage):
 
     def verify_chat_button_exists(self):
         """Verify that chat button exists"""
-        yield HelloPage(self.driver)
+        yield
         assert self.constants.CHAT_BUTTON_XPATH

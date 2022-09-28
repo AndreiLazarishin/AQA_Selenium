@@ -16,9 +16,7 @@ class TestStartPage:
             Clear the email field
             Check the email-field alert message
         """
-        log.info('Started with empty email')
         start_page.verify_empty_email_field_alert()
-        log.info('Empty email field error verified')
 
     def test_empty_password_field_alert(self, start_page):
         """
@@ -29,9 +27,7 @@ class TestStartPage:
             Clear the password field
             Check the password-field alert message
         """
-        log.info('Getting the error message for the empty password field')
         start_page.verify_empty_password_field_alert()
-        log.info('Empty password error verified')
 
     def test_empty_username_field_alert(self, start_page):
         """
@@ -42,9 +38,7 @@ class TestStartPage:
             Clear the username field
             Check the username-field alert message
         """
-        log.info('Check the error for invalid username')
         start_page.verify_empty_username_field_alert()
-        log.info('Username field alert were checked')
 
     def test_incorrect_login(self, start_page, random_user):
         """
@@ -56,10 +50,8 @@ class TestStartPage:
             Check the invalid username\password alert message
         """
         start_page.sign_in(random_user)
-        log.info('Logged in as unknown user')
 
         start_page.verify_sign_in_error()
-        log.info('Error was verified')
 
     def test_empty_login(self, start_page):
         """
@@ -71,10 +63,8 @@ class TestStartPage:
             Check the invalid username\password alert message
         """
         start_page.sign_in(User())
-        log.info('Provided empty values')
 
         start_page.verify_sign_in_error()
-        log.info('Error empty fields was verified')
 
     def test_success_login(self, start_page, known_user):
         """
@@ -88,11 +78,9 @@ class TestStartPage:
         """
 
         start_page.sign_in(known_user)
-        log.info('Logged in as existing user')
 
         # ToDo fix the test
         start_page.verify_chat_button_exists()
-        log.info('Chat button exists - User is logged in')
 
     def test_success_sign_up(self, start_page, random_user):
         """Setup:
@@ -104,7 +92,5 @@ class TestStartPage:
             Click on the Sign-up button"""
 
         hello_page = start_page.sign_up_and_verify(random_user)
-        log.info('Filling the fields and sign-up')
 
         hello_page.verify_success_sign_up(random_user.username)
-        log.info('Sign-up was success')

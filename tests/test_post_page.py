@@ -1,23 +1,12 @@
 import logging
 
 import pytest
-from selenium import webdriver
 
-from constants.base import DRIVER_PATH, BASE_URL
-from pages.start_page import StartPage
-from pages.utils import rand_str
+from pages.utils import rand_str, log_decorator
 
 
 class TestPostPage:
     log = logging.getLogger("[PostPage]")
-
-    @pytest.fixture(scope='function')
-    def start_page(self):
-        driver = webdriver.Chrome(DRIVER_PATH)
-        driver.get(BASE_URL)
-        driver.implicitly_wait(1.5)
-        yield StartPage(driver)
-        driver.close()
 
     @pytest.fixture()
     def hello_page(self, start_page, random_user):
@@ -32,6 +21,7 @@ class TestPostPage:
         create_post_page.verify_successfully_created_message()
         return create_post_page
 
+    @log_decorator
     def test_delete_post(self, create_post_page):
         """
                 Set up:
@@ -44,11 +34,10 @@ class TestPostPage:
                """
         post_page = create_post_page.navigate_to_new_post_page()
         post_page.delete_post()
-        self.log.info('Deleting the message')
 
         post_page.verify_deleted_post()
-        self.log.info('The message was deleted')
 
+    @log_decorator
     def test_edit_post(self, create_post_page):
         """
                 Set up:
