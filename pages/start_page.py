@@ -15,6 +15,8 @@ class StartPage(BasePage):
         self.fill_field(xpath=self.constants.SIGN_IN_USERNAME_FIELD_XPATH, value=user.username)
         self.fill_field(xpath=self.constants.SIGN_IN_PASSWORD_FIELD_XPATH, value=user.password)
         self.click(xpath=self.constants.SIGN_IN_BUTTON_XPATH)
+        from pages.hello_page import HelloPage
+        return HelloPage(self.driver)
 
     @log_decorator
     def verify_sign_in_error(self):

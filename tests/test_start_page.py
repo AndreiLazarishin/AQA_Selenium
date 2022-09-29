@@ -77,10 +77,10 @@ class TestStartPage:
             Check if there is a 'Chat' button
         """
 
-        start_page.sign_in(known_user)
+        hello_page = start_page.sign_in(known_user)
 
         # ToDo fix the test
-        start_page.verify_chat_button_exists()
+        hello_page.verify_success_sign_up(known_user.username)
 
     def test_success_sign_up(self, start_page, random_user):
         """Setup:
