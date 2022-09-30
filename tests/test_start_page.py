@@ -79,7 +79,6 @@ class TestStartPage:
 
         hello_page = start_page.sign_in(known_user)
 
-        # ToDo fix the test
         hello_page.verify_success_sign_up(known_user.username)
 
     def test_success_sign_up(self, start_page, random_user):

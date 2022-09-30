@@ -13,7 +13,7 @@ class CreatePostPage(BasePage):
     def create_post(self, post):
         """Create post using provided values"""
         self.fill_field(xpath=self.constants.TITLE_FIELD_XPATH, value=post.title)
-        self.fill_field(xpath=self.constants.BODY_FIELD_XPATH, value=post.title)
+        self.fill_field(xpath=self.constants.BODY_FIELD_XPATH, value=post.body)
         self.click(xpath=self.constants.CREATE_POST_BUTTON_XPATH)
 
     @log_decorator
@@ -29,6 +29,8 @@ class CreatePostPage(BasePage):
         self.fill_field(xpath=self.constants.TITLE_FIELD_XPATH, value=post.title)
         self.fill_field(xpath=self.constants.BODY_FIELD_XPATH, value=post.body)
         self.click(xpath=self.constants.UPDATE_POST_BUTTON_XPATH)
+        from pages.post_page import PostPage
+        yield PostPage(self.driver)
 
     @log_decorator
     def navigate_to_new_post_page(self):

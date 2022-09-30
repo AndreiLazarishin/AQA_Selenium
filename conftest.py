@@ -28,3 +28,9 @@ def known_user():
     user.username = 'abdul'
     user.password = 'Ci6aZ9khFDWu38L'
     return user
+
+
+@pytest.fixture()
+def hello_page(start_page, random_user):
+    """Sign up as a user and return the page"""
+    return start_page.sign_up_and_verify(random_user)

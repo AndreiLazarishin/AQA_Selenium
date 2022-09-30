@@ -1,17 +1,10 @@
 import logging
 
-import pytest
-
 from pages.utils import Post
 
 
 class TestCreatePostPage:
     log = logging.getLogger("[CreatePostPage]")
-
-    @pytest.fixture()
-    def hello_page(self, start_page, random_user):
-        """Sign up as a user and return the page"""
-        return start_page.sign_up_and_verify(random_user)
 
     def test_create_post_page(self, hello_page):
         """
@@ -26,5 +19,6 @@ class TestCreatePostPage:
 
         post = Post()
         post.fill_default()
+        create_post_page.create_post(post)
 
         create_post_page.verify_successfully_created_message()

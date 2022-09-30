@@ -22,12 +22,12 @@ class PostPage(CreatePostPage):
             f"Actual: {self.get_element_text(xpath=self.constants.SUCCESSFULLY_DELETED_MESSAGE_XPATH)}"
 
     @log_decorator
-    def edit_post(self, title='1408', body='I`ve edited the post'):
+    def edit_post(self):
         """Find the post and edit it"""
-        # self.navigate_to_new_post_page()
+        self.navigate_to_new_post_page()
         self.click(xpath=self.constants.EDIT_POST_BUTTON_XPATH)
         yield CreatePostPage(self.driver)
-        self.update_post(title=title, body=body)
+        self.update_post()
 
     @log_decorator
     def verify_successfully_edited_post(self):

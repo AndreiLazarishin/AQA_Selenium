@@ -21,7 +21,7 @@ class HelloPage(BasePage):
         assert self.get_element_text(self.constants.HELLO_MESSAGE_USERNAME_XPATH) == username, \
             f"Actual message: '{self.get_element_text(self.constants.HELLO_MESSAGE_USERNAME_XPATH)}'"
 
+    @log_decorator
     def verify_chat_button_exists(self):
         """Verify that chat button exists"""
-        yield
         assert self.constants.CHAT_BUTTON_XPATH
