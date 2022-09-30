@@ -1,5 +1,5 @@
 class PostPageConsts:
-    EDIT_POST_BUTTON_XPATH = './/a[@class="text-primary mr-2"]'
+    EDIT_POST_BUTTON_XPATH = './/a[@data-original-title="Edit"]'
     SUCCESSFULLY_EDITED_POST_XPATH = './/div[text()="Post successfully updated."]'
     SUCCESSFULLY_EDITED_POST_TEXT = 'Post successfully updated.'
     DELETE_POST_BUTTON_XPATH = ".//button[@class='delete-post-button text-danger']"

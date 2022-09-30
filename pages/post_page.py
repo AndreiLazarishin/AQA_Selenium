@@ -24,10 +24,9 @@ class PostPage(CreatePostPage):
     @log_decorator
     def edit_post(self):
         """Find the post and edit it"""
-        self.navigate_to_new_post_page()
+        # self.navigate_to_new_post_page()
         self.click(xpath=self.constants.EDIT_POST_BUTTON_XPATH)
-        yield CreatePostPage(self.driver)
-        self.update_post()
+        return CreatePostPage(self.driver)
 
     @log_decorator
     def verify_successfully_edited_post(self):

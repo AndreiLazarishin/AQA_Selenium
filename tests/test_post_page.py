@@ -43,5 +43,7 @@ class TestPostPage:
         """
         post_page = create_post_page.navigate_to_new_post_page()
         post_page.edit_post()
-
+        post = Post()
+        post.fill_default()
+        create_post_page.update_post(post)
         post_page.verify_successfully_edited_post()

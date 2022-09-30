@@ -30,7 +30,7 @@ class CreatePostPage(BasePage):
         self.fill_field(xpath=self.constants.BODY_FIELD_XPATH, value=post.body)
         self.click(xpath=self.constants.UPDATE_POST_BUTTON_XPATH)
         from pages.post_page import PostPage
-        yield PostPage(self.driver)
+        return PostPage(self.driver)
 
     @log_decorator
     def navigate_to_new_post_page(self):
