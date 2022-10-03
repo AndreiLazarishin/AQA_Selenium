@@ -37,8 +37,8 @@ def hello_page(start_page, random_user):
 
 
 @pytest.fixture()
-def known_profile(hello_page):
+def known_profile_page(hello_page):
     """Find a user and open its page"""
-    search = hello_page.header.open_search()
-    search.find_profile()
-    return search
+    profile = hello_page.header.open_search()
+    profile.find_profile()
+    return profile

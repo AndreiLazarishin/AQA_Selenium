@@ -2,6 +2,7 @@ from selenium.webdriver.common.keys import Keys
 
 from constants.search import SearchConsts
 from pages.base_page import BasePage
+from pages.utils import log_decorator
 
 
 class Search(BasePage):
@@ -10,6 +11,7 @@ class Search(BasePage):
         super().__init__(driver)
         self.constants = SearchConsts()
 
+    @log_decorator
     def find_profile(self):
         """Find the profile"""
         self.fill_field(xpath=self.constants.SEARCH_INPUT_FIELD_XPATH, value=self.constants.SEARCH_TEXT + Keys.ENTER)

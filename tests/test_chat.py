@@ -1,11 +1,12 @@
 import logging
 
-from pages.utils import rand_str
+from pages.utils import rand_str, log_decorator
 
 
 class TestChat:
     log = logging.getLogger("[ChatPage]")
 
+    @log_decorator
     def test_chat(self, hello_page):
         """
             Set up:
