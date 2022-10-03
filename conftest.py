@@ -40,5 +40,4 @@ def hello_page(start_page, random_user):
 def known_profile_page(hello_page):
     """Find a user and open its page"""
     profile = hello_page.header.open_search()
-    profile.find_profile()
-    return profile
+    return profile.find_profile()

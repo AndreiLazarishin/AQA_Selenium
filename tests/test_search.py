@@ -8,7 +8,3 @@ class TestSearchPage:
         """Find the profile"""
         search = hello_page.header.open_search()
         search.find_profile()
-
-    def test_follow_the_profile(self, known_profile_page):
-        """Follow the profile"""
-        profile = known_profile_page()
