@@ -34,3 +34,11 @@ def known_user():
 def hello_page(start_page, random_user):
     """Sign up as a user and return the page"""
     return start_page.sign_up_and_verify(random_user)
+
+
+@pytest.fixture()
+def known_profile(hello_page):
+    """Find a user and open its page"""
+    search = hello_page.header.open_search()
+    search.find_profile()
+    return search

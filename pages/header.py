@@ -1,6 +1,7 @@
 from constants.header import HeaderConsts
 from pages.base_page import BasePage
 from pages.chat import Chat
+from pages.search import Search
 from pages.utils import log_decorator
 
 
@@ -22,3 +23,9 @@ class Header(BasePage):
         """Open chat"""
         self.click(self.constants.OPEN_CHAT_XPATH)
         return Chat(self.driver)
+
+    @log_decorator
+    def open_search(self):
+        """Open the search dialog"""
+        self.click(self.constants.SEARCH_LINK_XPATH)
+        return Search(self.driver)
